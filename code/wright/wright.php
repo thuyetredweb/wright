@@ -193,6 +193,9 @@ class Wright
 		{
 			$this->document->params->set('style', $user->getParam('theme'));
 		}
+		
+		//Build LESS
+		$this->less();
 
 		// Build css
 		$this->css();
@@ -233,7 +236,7 @@ class Wright
 					elseif ($folder == 'template')
 						$file = JPATH_THEMES . '/' . $this->document->template . '/css/' . $style;
 					else
-						$file = JPATH_THEMES . '/' . $this->document->template . '/css/' . $style;
+						$file = JPATH_THEMES . '/' . $this->document->template . '/wright/'.$folder.'/css/' . $style;
 
 					if (filemtime($file) > $cachetime)
 						$rebuild = true;
@@ -255,7 +258,7 @@ class Wright
 						elseif ($folder == 'template')
 							$css .= file_get_contents(JPATH_THEMES . '/' . $this->document->template . '/css/' . $style);
 						else
-							$css .= file_get_contents(JPATH_THEMES . '/' . $this->document->template . '/css/' . $style);
+							$css .= file_get_contents(JPATH_THEMES . '/' . $this->document->template . '/wright/'.$folder.'/css/' . $style);
 					}
 				}
 			}
@@ -398,6 +401,31 @@ class Wright
 		return $styles;
 	}
 
+	private	function less()
+	{
+		if (filemtime(JPATH_THEMES . '/' . $this->document->template . '/wright/bootstrap/less/variables.less') > filemtime(JPATH_THEMES . '/' . $this->document->template . '/wright/bootstrap/css/bootstrap.min.css'))
+		{
+			include('includes/lessc.inc.php');
+			$less = new lessc;
+			$less->setFormatter("compressed");
+			
+			try
+			{
+				$less->compileFile(JPATH_THEMES . '/' . $this->document->template . '/wright/bootstrap/less/bootstrap.less', JPATH_THEMES . '/' . $this->document->template . '/wright/bootstrap/css/bootstrap.min.css');
+			
+				if($this->config_vars['responsive'])
+				{
+					$less->compileFile(JPATH_THEMES . '/' . $this->document->template . '/wright/bootstrap/less/responsive.less', JPATH_THEMES . '/' . $this->document->template . '/wright/bootstrap/css/bootstrap-responsive.min.css');
+				}
+			}
+			catch (exception $e)
+			{
+				echo "fatal error: " . $e->getMessage();
+			}
+		}
+		
+	}
+	
 	private function doctype()
 	{
 		require(dirname(__FILE__) . '/doctypes/' . $this->document->params->get('doctype', 'html5') . '.php');
