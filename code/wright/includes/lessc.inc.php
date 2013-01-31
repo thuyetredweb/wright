@@ -1551,7 +1551,7 @@ class lessc {
 			if (!$parser->propertyValue($value)) {
 				throw new Exception("failed to parse passed in variable $name: $strValue");
 			}
-
+			
 			$this->set($name, $value);
 		}
 	}

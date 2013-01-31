@@ -209,7 +209,7 @@ class Wright
 		{
 			$this->processCSSCache($styles);
 		}
-		else
+		elseif(!$this->document->params->get('cssBelow', '0'))
 		{
 			$this->addCSSToHead($styles);
 		}
@@ -275,7 +275,11 @@ class Wright
 
 			file_put_contents(JPATH_THEMES . '/' . $this->document->template . '/css/' . $this->document->template . '.css', $tidy->print->plain());
 		}
-		$this->document->addStyleSheet(JURI::root().'templates/' . $this->document->template . '/css/' . $this->document->template . '.css');
+		
+		if(!$this->document->params->get('cssBelow', '0'))
+		{
+			$this->document->addStyleSheet(JURI::root().'templates/' . $this->document->template . '/css/' . $this->document->template . '.css');
+		}
 	}
 
 	private function addCSSToHead($styles)
@@ -291,7 +295,9 @@ class Wright
 					elseif ($folder == 'template')
 						$sheet = JURI::root().'templates/' . $this->document->template . '/css/' . $style;
 					elseif ($folder == 'bootstrap') {
-						if ($style == 'style-' . $this->document->params->get('style') . '.bootstrap.min.css') {
+						if (($style == 'style-' . $this->document->params->get('style') . '.bootstrap.min.css') ||
+						 	($style == 'style-' . $this->document->params->get('style') . '.bootstrap.responsive.min.css')) 
+						{
 							$sheet = JURI::root().'templates/' . $this->document->template . '/css/' . $style;
 						}
 						else {
@@ -302,7 +308,7 @@ class Wright
 						$sheet = $this->_urlFontAwesomeMore . '/css/' . $style;
 					else
 						$sheet = JURI::root().'templates/' . $this->document->template . '/css/' . $style;
-
+					
 					$this->document->addStyleSheet($sheet);
 				}
 			}
@@ -349,6 +355,9 @@ class Wright
 		// Load up a specific bootstrap style if set
 		if (is_file(JPATH_THEMES . '/' . $this->document->template . '/css/' . 'style-' . $this->document->params->get('style') . '.bootstrap.min.css'))
 			$styles['bootstrap'][0] = 'style-' . $this->document->params->get('style') . '.bootstrap.min.css';
+		
+		if (is_file(JPATH_THEMES . '/' . $this->document->template . '/css/' . 'style-' . $this->document->params->get('style') . '.bootstrap.responsive.min.css'))
+			$styles['bootstrap'][1] = 'style-' . $this->document->params->get('style') . '.bootstrap.responsive.min.css';
 
 		// Load up a specific style if set
 		if (is_file(JPATH_THEMES . '/' . $this->document->template . '/css/' . 'style-' . $this->document->params->get('style') . '.css'))
@@ -395,27 +404,48 @@ class Wright
 			$styles['template'][] = 'rtl.css';
 
 		//Check to see if custom.css file is present, and if so add it after all other css files
-			if (is_file(JPATH_THEMES . '/' . $this->document->template . '/css/custom.css'))
-				$styles['template'][] = 'custom.css';
+		if (is_file(JPATH_THEMES . '/' . $this->document->template . '/css/custom.css'))
+			$styles['template'][] = 'custom.css';
 
 		return $styles;
 	}
 
 	private	function less()
 	{
-		if (filemtime(JPATH_THEMES . '/' . $this->document->template . '/wright/bootstrap/less/variables.less') > filemtime(JPATH_THEMES . '/' . $this->document->template . '/wright/bootstrap/css/bootstrap.min.css'))
+		if ($this->document->params->get('compileless', 0))
 		{
 			include('includes/lessc.inc.php');
 			$less = new lessc;
-			$less->setFormatter("compressed");
+			//$less->setFormatter("compressed");
+			$templateParams = TemplateParam::getInstance()->getParams();
 			
 			try
 			{
-				$less->compileFile(JPATH_THEMES . '/' . $this->document->template . '/wright/bootstrap/less/bootstrap.less', JPATH_THEMES . '/' . $this->document->template . '/wright/bootstrap/css/bootstrap.min.css');
-			
-				if($this->config_vars['responsive'])
+				//add variables
+				if(count($templateParams) > 0)
+				{
+					$less->setVariables($templateParams);
+				}	
+		
+				//template less to style bootstrapp css 
+				if (is_file(JPATH_THEMES . '/' . $this->document->template . '/less/template.less'))
+				{
+					$less->compileFile(JPATH_THEMES . '/' . $this->document->template . '/less/' . 'template.less', JPATH_THEMES . '/' . $this->document->template . '/css/' . 'style-' . $this->document->params->get('style') . '.bootstrap.min.css');
+				}
+				else
+				{
+					$less->compileFile(JPATH_THEMES . '/' . $this->document->template . '/wright/bootstrap/less/bootstrap.less', JPATH_THEMES . '/' . $this->document->template . '/wright/bootstrap/css/bootstrap.min.css');
+				}
+				
+				//responsive less to style css
+				if ($this->document->params->get('responsive',1)) 
 				{
 					$less->compileFile(JPATH_THEMES . '/' . $this->document->template . '/wright/bootstrap/less/responsive.less', JPATH_THEMES . '/' . $this->document->template . '/wright/bootstrap/css/bootstrap-responsive.min.css');
+					
+					if(is_file(JPATH_THEMES . '/' . $this->document->template . '/less/' . 'responsive.less'))
+					{
+						$less->compileFile(JPATH_THEMES . '/' . $this->document->template . '/less/' . 'responsive.less', JPATH_THEMES . '/' . $this->document->template . '/css/' . 'style-' . $this->document->params->get('style') . '.bootstrap.responsive.min.css');
+					}
 				}
 			}
 			catch (exception $e)
@@ -623,6 +653,58 @@ class Wright
 			}
 			return $script;
 		}
+		return "";
+	}
+	
+	public function generateCSS()
+	{
+		$cssBelow = ($this->document->params->get('cssBelow', 0) == 1 ? true : false);
+		
+		if ($cssBelow)
+		{
+			$css = "\n";
+			if ($this->document->params->get('csscache', 'no') == 'yes' && is_writable(JPATH_THEMES . '/' . $this->document->template . '/css'))
+			{
+				$css .= '<link rel="stylesheet" href="' . JURI::root().'templates/' . $this->document->template . '/css/' . $this->document->template . '.css' . '" type="text/css" />' . "\n";
+			}
+			else
+			{
+				$styles = $this->loadCSSList();
+			
+				foreach ($styles as $folder => $files)
+				{
+					if (count($files))
+					{
+						foreach ($files as $style)
+						{
+							if ($folder == 'wright')
+								$sheet = JURI::root().'templates/' . $this->document->template . '/wright/css/' . $style;
+							elseif ($folder == 'template')
+							$sheet = JURI::root().'templates/' . $this->document->template . '/css/' . $style;
+							elseif ($folder == 'bootstrap') {
+								if (($style == 'style-' . $this->document->params->get('style') . '.bootstrap.min.css') ||
+						 			($style == 'style-' . $this->document->params->get('style') . '.bootstrap.responsive.min.css')) 
+								{
+									$sheet = JURI::root().'templates/' . $this->document->template . '/css/' . $style;
+								}
+								else {
+									$sheet = $this->_urlBootstrap . '/css/' . $style;
+								}
+							}
+							elseif ($folder == 'fontawesomemore')
+							$sheet = $this->_urlFontAwesomeMore . '/css/' . $style;
+							else
+								$sheet = JURI::root().'templates/' . $this->document->template . '/css/' . $style;
+						
+							$css .= '<link rel="stylesheet" href="' . $sheet . '" type="text/css" />' . "\n"; 
+						}
+					}
+				}
+			}
+			
+			return $css;
+		}
+		
 		return "";
 	}
 }

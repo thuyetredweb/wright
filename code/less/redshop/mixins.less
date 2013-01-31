@@ -1,0 +1,151 @@
+/* author 		redWeb ApS
+ * copyright 	Copyright © 2013 redweb.dk All rights reserved.
+ * license  	http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
+ * website   	http://www.redweb.dk
+ */
+
+
+.gridRedWeb
+{
+	.wrapper(@gridMarginLeft)
+	{
+		margin-left: -@gridMarginLeft;
+		width: auto !important;
+		overflow: hidden;
+	}
+	
+	.row(@gridWidth, @gridColumns, @gridMarginLeft, @gridMarginBottom)
+	{
+		width: floor((@gridWidth - (@gridColumns - 1) * @gridMarginLeft) / @gridColumns) !important;
+		margin: 0px 0px @gridMarginBottom @gridMarginLeft;
+		
+		float: left;
+		
+		*padding: 0px !important;
+		*width: floor((@gridWidth - (@gridColumns - 1) * @gridMarginLeft) / @gridColumns) - 2 !important;
+	}
+	
+	.grid(@layout)
+	{
+		#sidebar1
+		{
+			@var : "gridLeftWidth@{layout}";
+			width: @@var;
+		}
+		
+		#sidebar2
+		{
+			@var : "gridRightWidth@{layout}";
+			width: @@var;
+		}
+		
+		@var : "gridContentWidth@{layout}";
+		@gridContentWidthL : @@var;
+		
+		#main
+		{
+			width: @gridContentWidthL;
+		}
+		
+		.category_box_wrapper
+		{
+			@var : "gridProductsMarginLeft@{layout}";
+			.gridRedWeb .wrapper(@@var);
+		}
+		
+		.category_box_wrapper .category_box_outside
+		{
+			@var1 : "gridProductsColumn@{layout}";
+			@var2 : "gridProductsMarginLeft@{layout}";
+			@var3 : "gridProductsMarginBottom@{layout}";
+			
+			.gridRedWeb .row(@gridContentWidthL, @@var1, @@var2, @@var3);
+		}
+		
+		.category_box_wrapper .category_box_outside_row
+		{
+			@var : "gridProductsMarginLeft@{layout}";
+			margin-left: @@var;
+		}
+		
+		.category_front_wrapper
+		{
+			@var : "gridCategoriesMarginLeft@{layout}";
+			.gridRedWeb .wrapper(@@var);
+		}
+		
+		.category_front_wrapper .category_front
+		{
+			@var1 : "gridCategoriesColumn@{layout}";
+			@var2 : "gridCategoriesMarginLeft@{layout}";
+			@var3 : "gridCategoriesMarginBottom@{layout}";
+			
+			.gridRedWeb .row(@gridContentWidthL, @@var1, @@var2, @@var3);
+		}
+
+		.related_product_wrapper
+		{
+			@var : "gridRelatedProductsMarginLeft@{layout}";
+			.gridRedWeb .wrapper(@@var);
+		}
+		
+		.related_product_wrapper .related_product_inside
+		{
+			@var1 : "gridRelatedProductsColumn@{layout}";
+			@var2 : "gridRelatedProductsMarginLeft@{layout}";
+			@var3 : "gridRelatedProductsMarginBottom@{layout}";
+			
+			.gridRedWeb .row(@gridContentWidthL, @@var1, @@var2, @@var3);
+		}
+	}
+	
+	.fluid(@layout)
+	{
+		@margin: 5%;
+		@categoryColumns : "gridCategoriesColumn@{layout}";
+		@categoryWidth : (100/@@categoryColumns) - @margin;
+		
+		@productColumns : "gridProductsColumn@{layout}";
+		@productWidth : (100/@@productColumns) - @margin;
+		
+		@relatedProductColumns : "gridRelatedProductsColumn@{layout}";
+		@relatedProductWidth : (100/@@relatedProductColumns) - @margin;
+		
+		#sidebar1, #sidebar2, #main
+		{
+			width: auto;
+		}
+		
+		.category_box_wrapper, .category_front_wrapper, .related_product_wrapper
+		{
+			margin-left: -@margin;
+		}
+		
+		.category_box_wrapper .category_box_outside, 
+		.category_front_wrapper .category_front,
+		.related_product_wrapper .related_product_inside
+		{
+			margin-left: @margin;
+			margin-bottom: @margin;
+		}
+		
+		.category_box_wrapper .category_box_outside
+		{
+			width: @productWidth !important;
+			
+		}
+		
+		.category_front_wrapper .category_front
+		{
+			width: @categoryWidth !important;
+		}
+		
+		.related_product_wrapper .related_product_inside
+		{
+			width: @relatedProductWidth !important;
+		}
+		
+	}
+	
+	
+}

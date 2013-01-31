@@ -97,7 +97,6 @@ class WrightAdapterJoomlaLogo
 			$module2name2 = $module2name;
 		}
 
-
 		// If user wants a module, load it instead of image
 		if ($doc->document->params->get('logo', 'template') == 'module') {
 			$html .= '<div id="logo" class="span'.$doc->document->params->get('logowidth', '6').'"><jdoc:include type="modules" name="logo" /></div>';

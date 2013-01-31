@@ -1,63 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE install PUBLIC "-//Joomla! 1.5//DTD template 1.0//EN" "http://www.joomla.org/xml/dtd/1.5/template-install.dtd">
-<extension version="2.5" type="template" method="upgrade" client="site">
-	<name>js_wright</name>
-	<creationDate>January 2013</creationDate>
-	<author>Joomlashack</author>
-	<authorEmail>support@joomlashack.com</authorEmail>
-	<authorUrl>http://www.joomlashack.com</authorUrl>
-	<copyright>Copyright Joomlashack 2013. All rights reserved</copyright>
-	<license>GNU GPLv2</license>
-	<version>3.0.18</version>
-    <description>TPL_JS_WRIGHT_XML_DESCRIPTION</description>
-
-	<languages folder="language">
-		<!-- en-GB -->
-		<language tag="en-GB">en-GB/en-GB.tpl_js_wright.ini</language>
-		<language tag="en-GB">en-GB/en-GB.tpl_js_wright.sys.ini</language>
-		<!-- es-ES -->
-		<language tag="es-ES">es-ES/es-ES.tpl_js_wright.ini</language>
-		<language tag="es-ES">es-ES/es-ES.tpl_js_wright.sys.ini</language>
-	</languages>
+<extension version="2.5" type="template" method="upgrade">
+	
+	<name>redWeb</name>
+	<creationDate>2013-01-01</creationDate>
+	<author>redWeb Aps</author>
+	<copyright>Copyright © 2013 redWeb Aps</copyright>
+	<authorEmail>mail@redweb.dk</authorEmail>
+	<authorUrl>http://www.redweb.dk</authorUrl>
+	<version>1.0.0</version>
+	<description>
+		<![CDATA[
+			<a href="http://redweb.dk" target="_blank" title="redWEB ApS"><img src="http://redweb.dk/images/stories/logo.png" alt="redWEB ApS" /></a>
+		]]>
+	</description>
 	
 	<files>
+		<folder>css</folder>
+		<folder>fonts</folder>
+		<folder>html</folder>
+		<folder>images</folder>
+		<folder>js</folder>
+		<folder>language</folder>
+		<folder>less</folder>
+		<folder>wright</folder>
 		<filename>component.php</filename>
 		<filename>favicon.ico</filename>
 		<filename>functions.php</filename>
 		<filename>index.php</filename>
-		<filename>params.ini</filename>
 		<filename>template.php</filename>
-		<filename>templateDetails.xml</filename>
+		<filename>template_preview.png</filename>
 		<filename>template_thumbnail.png</filename>
-		<folder>css</folder>
-		<folder>html</folder>
-		<folder>images</folder>
-		<folder>js</folder>
-		<folder>wright</folder>
+		<filename>templateDetails.xml</filename>
 	</files>
 	
 	<positions>
+		<position>debug</position>
 		<position>toolbar</position>
 		<position>logo</position>
 		<position>top</position>
-		<position>top2</position>
+		<position>header</position>
+		<position>header2</position>
 		<position>menu</position>
-		<position>featured</position>
-		<position>grid-top</position>
-		<position>grid-top2</position>
-		<position>above-content</position>
 		<position>breadcrumbs</position>
+		<position>above-main</position>
+		<position>below-main</position>
 		<position>sidebar1</position>
 		<position>sidebar2</position>
+		<position>above-content</position>
 		<position>below-content</position>
-		<position>grid-bottom</position>
-		<position>grid-bottom2</position>
-		<position>bottom-menu</position>
 		<position>footer</position>
 	</positions>
 	
+	<languages folder="language">
+		<language tag="en-GB">en-GB/en-GB.tpl_redweb.ini</language>
+		<language tag="en-GB">en-GB/en-GB.tpl_redweb.sys.ini</language>
+	</languages>
+	
 	<config>
-		<fields name="params" addfieldpath="/templates/js_wright/wright/parameters/joomla_2.5">
+		<fields name="params" addfieldpath="/templates/redweb/wright/parameters/joomla_2.5">
 			<fieldset name="basic">
                 <!-- Start of default Wright params -->
 				<field name="helper" type="help" label="TPL_JS_WRIGHT_FIELD_NEED_HELP_LABEL" description="TPL_JS_WRIGHT_FIELD_NEED_HELP_DESC"/>
@@ -87,7 +87,7 @@
 					<option value="xhtml1strict">TPL_JS_WRIGHT_FIELD_DOCTYPE_XHTML1_STRICT</option>
 				</field>
 				<field name="buttonspacer" label="TPL_JS_WRIGHT_BOOTSTRAP_TITLE_LABEL" description="TPL_JS_WRIGHT_BOOTSTRAP_TITLE_DESC" type="spacer" />
-				<field name="bs_rowmode" type="list" default="row-fluid" label="TPL_JS_WRIGHT_FIELD_BOOTSTRAP_ROW_MODE_LABEL" description="TPL_JS_WRIGHT_FIELD_BOOTSTRAP_ROW_MODE_DESC">
+				<field name="bs_rowmode" type="list" default="row" label="TPL_JS_WRIGHT_FIELD_BOOTSTRAP_ROW_MODE_LABEL" description="TPL_JS_WRIGHT_FIELD_BOOTSTRAP_ROW_MODE_DESC">
 					<option value="row-fluid">TPL_JS_WRIGHT_FIELD_BOOTSTRAP_ROW_MODE_FLUID</option>
 					<option value="row">TPL_JS_WRIGHT_FIELD_BOOTSTRAP_ROW_MODE_DEFAULT</option>
 				</field>
@@ -106,7 +106,127 @@
 					<option value="img-polaroid">TPL_JS_WRIGHT_BOOTSTRAP_IMAGES_POLAROID</option>
 				</field>
                 <!-- End of default Wright params -->
+                
+                <field name="compileless" type="list" default="1" label="TPL_JS_WRIGHT_COMPILE_LESSCSS_LABEL" description="TPL_JS_WRIGHT_COMPILE_LESSCSS_DESC">
+					<option value="1">JYES</option>
+					<option value="0">JNO</option>
+				</field>
+				
+				<field name="cssBelow" type="list" default="1" label="TPL_JS_WRIGHT_COMPILE_CSSBELOW_LABEL" description="TPL_JS_WRIGHT_COMPILE_CSSBELOW_DESC">
+					<option value="1">JYES</option>
+					<option value="0">JNO</option>
+				</field>
 			</fieldset>
+			
+			<fieldset name="REDSHOP_DEFAULT_GRID">
+				<field name="gridRowWidth" type="text" default="980" label="TPL_REDSHOP_GRIDWIDTH_LABEL" description="TPL_REDSHOP_GRIDWIDTH_DESC" filter="integer" />
+				<field name="gridLeftWidth" type="text" default="230" label="TPL_REDSHOP_GRIDLEFTWIDTH_LABEL" description="TPL_REDSHOP_GRIDLEFTWIDTH_DESC" filter="integer" />
+				<field name="gridRightWidth" type="text" default="230" label="TPL_REDSHOP_GRIDRIGHTWIDTH_LABEL" description="TPL_REDSHOP_GRIDRIGHTWIDTH_DESC" filter="integer" />
+				<field name="gridGutterWidth" type="text" default="20" label="TPL_REDSHOP_GRIDGUTTERWIDTH_LABEL" description="TPL_REDSHOP_GRIDGUTTERWIDTH_DESC" filter="integer" />
+				<field type="spacer" />
+				
+				<field type="spacer" label="&lt;b&gt;Category&lt;/b&gt;" />
+				<field name="gridCategoriesColumn" type="text" default="3" label="TPL_REDSHOP_CATEGORYCOLUMN_LABEL" description="TPL_REDSHOP_CATEGORYCOLUMN_DESC" filter="integer" />
+				<field name="gridCategoriesMarginLeft" type="text" default="20" label="TPL_REDSHOP_CATEGORYCOLUMN_MARGINLEFT_LABEL" description="TPL_REDSHOP_CATEGORYCOLUMN_MARGINLEFT_DESC" filter="integer" />
+				<field name="gridCategoriesMarginBottom" type="text" default="20" label="TPL_REDSHOP_CATEGORYCOLUMN_MARGINRIGHT_LABEL" description="TPL_REDSHOP_CATEGORYCOLUMN_MARGINRIGHT_DESC" filter="integer" />
+				<field name="gridCategoriesHeight" type="text" default="200" label="TPL_REDSHOP_CATEGORYCOLUMN_HEIGHT_LABEL" description="TPL_REDSHOP_CATEGORYCOLUMN_HEIGHT_DESC" filter="integer" />
+				
+				<field type="spacer" />
+				<field type="spacer" label="&lt;b&gt;Product&lt;/b&gt;" />
+				<field name="gridProductsColumn" type="text" default="3" label="TPL_REDSHOP_PRODUCTCOLUMN_LABEL" description="TPL_REDSHOP_PRODUCTCOLUMN_DESC" filter="integer" />
+				<field name="gridProductsMarginLeft" type="text" default="20" label="TPL_REDSHOP_PRODUCTCOLUMN_MARGINLEFT_LABEL" description="TPL_REDSHOP_PRODUCTCOLUMN_MARGINLEFT_DESC" filter="integer" />
+				<field name="gridProductsMarginBottom" type="text" default="20" label="TPL_REDSHOP_PRODUCTCOLUMN_MARGINRIGHT_LABEL" description="TPL_REDSHOP_PRODUCTCOLUMN_MARGINRIGHT_DESC" filter="integer" />
+				<field name="gridProductsHeight" type="text" default="200" label="TPL_REDSHOP_PRODUCTCOLUMN_HEIGHT_LABEL" description="TPL_REDSHOP_PRODUCTCOLUMN_HEIGHT_DESC" filter="integer" />
+				
+				<field type="spacer" />
+				<field type="spacer" label="&lt;b&gt;Related Product&lt;/b&gt;" />
+				<field name="gridRelatedProductsColumn" type="text" default="3" label="TPL_REDSHOP_RELATEDPRODUCTCOLUMN_LABEL" description="TPL_REDSHOP_RELATEDPRODUCTCOLUMN_DESC" filter="integer" />
+				<field name="gridRelatedProductsMarginLeft" type="text" default="20" label="TPL_REDSHOP_RELATEDPRODUCTCOLUMN_MARGINLEFT_LABEL" description="TPL_REDSHOP_RELATEDPRODUCTCOLUMN_MARGINLEFT_DESC" filter="integer" />
+				<field name="gridRelatedProductsMarginBottom" type="text" default="20" label="TPL_REDSHOP_RELATEDPRODUCTCOLUMN_MARGINRIGHT_LABEL" description="TPL_REDSHOP_RELATEDPRODUCTCOLUMN_MARGINRIGHT_DESC" filter="integer" />
+				<field name="gridRelatedProductsHeight" type="text" default="200" label="TPL_REDSHOP_RELATEDPRODUCTCOLUMN_HEIGHT_LABEL" description="TPL_REDSHOP_RELATEDPRODUCTCOLUMN_HEIGHT_DESC" filter="integer" />
+				
+				
+				
+			</fieldset>
+			
+			<fieldset name="REDSHOP_TABLET_TO_DEFAULT_GRID">
+				<field name="gridRowWidth768" type="text" default="724" label="TPL_REDSHOP_GRIDWIDTH_LABEL" description="TPL_REDSHOP_GRIDWIDTH_DESC" filter="integer" />
+				<field name="gridLeftWidth768" type="text" default="150" label="TPL_REDSHOP_GRIDLEFTWIDTH_LABEL" description="TPL_REDSHOP_GRIDLEFTWIDTH_DESC" filter="integer" />
+				<field name="gridRightWidth768" type="text" default="150" label="TPL_REDSHOP_GRIDRIGHTWIDTH_LABEL" description="TPL_REDSHOP_GRIDRIGHTWIDTH_DESC" filter="integer" />
+				<field name="gridGutterWidth768" type="text" default="20" label="TPL_REDSHOP_GRIDGUTTERWIDTH_LABEL" description="TPL_REDSHOP_GRIDGUTTERWIDTH_DESC" filter="integer" />
+				<field type="spacer" />
+				
+				<field type="spacer" label="&lt;b&gt;Category&lt;/b&gt;" />
+				<field name="gridCategoriesColumn768" type="text" default="2" label="TPL_REDSHOP_CATEGORYCOLUMN_LABEL" description="TPL_REDSHOP_CATEGORYCOLUMN_DESC" filter="integer" />
+				<field name="gridCategoriesMarginLeft768" type="text" default="10" label="TPL_REDSHOP_CATEGORYCOLUMN_MARGINLEFT_LABEL" description="TPL_REDSHOP_CATEGORYCOLUMN_MARGINLEFT_DESC" filter="integer" />
+				<field name="gridCategoriesMarginBottom768" type="text" default="10" label="TPL_REDSHOP_CATEGORYCOLUMN_MARGINRIGHT_LABEL" description="TPL_REDSHOP_CATEGORYCOLUMN_MARGINRIGHT_DESC" filter="integer" />
+				<field name="gridCategoriesHeight768" type="text" default="200" label="TPL_REDSHOP_CATEGORYCOLUMN_HEIGHT_LABEL" description="TPL_REDSHOP_CATEGORYCOLUMN_HEIGHT_DESC" filter="integer" />
+				
+				<field type="spacer" />
+				<field type="spacer" label="&lt;b&gt;Product&lt;/b&gt;" />
+				<field name="gridProductsColumn768" type="text" default="2" label="TPL_REDSHOP_PRODUCTCOLUMN_LABEL" description="TPL_REDSHOP_PRODUCTCOLUMN_DESC" filter="integer" />
+				<field name="gridProductsMarginLeft768" type="text" default="10" label="TPL_REDSHOP_PRODUCTCOLUMN_MARGINLEFT_LABEL" description="TPL_REDSHOP_PRODUCTCOLUMN_MARGINLEFT_DESC" filter="integer" />
+				<field name="gridProductsMarginBottom768" type="text" default="10" label="TPL_REDSHOP_PRODUCTCOLUMN_MARGINRIGHT_LABEL" description="TPL_REDSHOP_PRODUCTCOLUMN_MARGINRIGHT_DESC" filter="integer" />
+				<field name="gridProductsHeight768" type="text" default="200" label="TPL_REDSHOP_PRODUCTCOLUMN_HEIGHT_LABEL" description="TPL_REDSHOP_PRODUCTCOLUMN_HEIGHT_DESC" filter="integer" />
+				
+				<field type="spacer" />
+				<field type="spacer" label="&lt;b&gt;Related Product&lt;/b&gt;" />
+				<field name="gridRelatedProductsColumn768" type="text" default="2" label="TPL_REDSHOP_RELATEDPRODUCTCOLUMN_LABEL" description="TPL_REDSHOP_RELATEDPRODUCTCOLUMN_DESC" filter="integer" />
+				<field name="gridRelatedProductsMarginLeft768" type="text" default="10" label="TPL_REDSHOP_RELATEDPRODUCTCOLUMN_MARGINLEFT_LABEL" description="TPL_REDSHOP_RELATEDPRODUCTCOLUMN_MARGINLEFT_DESC" filter="integer" />
+				<field name="gridRelatedProductsMarginBottom768" type="text" default="10" label="TPL_REDSHOP_RELATEDPRODUCTCOLUMN_MARGINRIGHT_LABEL" description="TPL_REDSHOP_RELATEDPRODUCTCOLUMN_MARGINRIGHT_DESC" filter="integer" />
+				<field name="gridRelatedProductsHeight768" type="text" default="200" label="TPL_REDSHOP_RELATEDPRODUCTCOLUMN_HEIGHT_LABEL" description="TPL_REDSHOP_RELATEDPRODUCTCOLUMN_HEIGHT_DESC" filter="integer" />
+			</fieldset>
+			
+			<fieldset name="REDSHOP_LANDSCAPE_PHONE_TO_TABLET_GRID">
+				<field type="spacer" label="&lt;b&gt;Category&lt;/b&gt;" />
+				<field name="gridCategoriesColumn767" type="text" default="2" label="TPL_REDSHOP_CATEGORYCOLUMN_LABEL" description="TPL_REDSHOP_CATEGORYCOLUMN_DESC" filter="integer" />
+				<field name="gridCategoriesHeight767" type="text" default="200" label="TPL_REDSHOP_RELATEDPRODUCTCOLUMN_HEIGHT_LABEL" description="TPL_REDSHOP_RELATEDPRODUCTCOLUMN_HEIGHT_DESC" filter="integer" />
+				
+				<field type="spacer" />
+				<field type="spacer" label="&lt;b&gt;Product&lt;/b&gt;" />
+				<field name="gridProductsColumn767" type="text" default="2" label="TPL_REDSHOP_CATEGORYCOLUMN_LABEL" description="TPL_REDSHOP_CATEGORYCOLUMN_DESC" filter="integer" />
+				<field name="gridProductsHeight767" type="text" default="200" label="TPL_REDSHOP_PRODUCTCOLUMN_HEIGHT_LABEL" description="TPL_REDSHOP_PRODUCTCOLUMN_HEIGHT_DESC" filter="integer" />
+				
+				<field type="spacer" />
+				<field type="spacer" label="&lt;b&gt;Related Product&lt;/b&gt;" />
+				<field name="gridRelatedProductsColumn767" type="text" default="2" label="TPL_REDSHOP_CATEGORYCOLUMN_LABEL" description="TPL_REDSHOP_CATEGORYCOLUMN_DESC" filter="integer" />
+				<field name="gridRelatedProductsHeight767" type="text" default="200" label="TPL_REDSHOP_RELATEDPRODUCTCOLUMN_HEIGHT_LABEL" description="TPL_REDSHOP_RELATEDPRODUCTCOLUMN_HEIGHT_DESC" filter="integer" />
+			</fieldset>
+			
+			<fieldset name="REDSHOP_LANDSCAPE_PHONE_GRID">
+				<field type="spacer" label="&lt;b&gt;Category&lt;/b&gt;" />
+				<field name="gridCategoriesColumn480" type="text" default="2" label="TPL_REDSHOP_CATEGORYCOLUMN_LABEL" description="TPL_REDSHOP_CATEGORYCOLUMN_DESC" filter="integer" />
+				<field name="gridCategoriesHeight480" type="text" default="200" label="TPL_REDSHOP_RELATEDPRODUCTCOLUMN_HEIGHT_LABEL" description="TPL_REDSHOP_RELATEDPRODUCTCOLUMN_HEIGHT_DESC" filter="integer" />
+				
+				<field type="spacer" />
+				<field type="spacer" label="&lt;b&gt;Product&lt;/b&gt;" />
+				<field name="gridProductsColumn480" type="text" default="2" label="TPL_REDSHOP_CATEGORYCOLUMN_LABEL" description="TPL_REDSHOP_CATEGORYCOLUMN_DESC" filter="integer" />
+				<field name="gridProductsHeight480" type="text" default="200" label="TPL_REDSHOP_PRODUCTCOLUMN_HEIGHT_LABEL" description="TPL_REDSHOP_PRODUCTCOLUMN_HEIGHT_DESC" filter="integer" />
+				
+				<field type="spacer" />
+				<field type="spacer" label="&lt;b&gt;Related Product&lt;/b&gt;" />
+				<field name="gridRelatedProductsColumn480" type="text" default="2" label="TPL_REDSHOP_CATEGORYCOLUMN_LABEL" description="TPL_REDSHOP_CATEGORYCOLUMN_DESC" filter="integer" />
+				<field name="gridRelatedProductsHeight480" type="text" default="200" label="TPL_REDSHOP_RELATEDPRODUCTCOLUMN_HEIGHT_LABEL" description="TPL_REDSHOP_RELATEDPRODUCTCOLUMN_HEIGHT_DESC" filter="integer" />
+			</fieldset>
+			
+			<fieldset name="REDSHOP_PHONE_GRID">
+				<field type="spacer" label="&lt;b&gt;Category&lt;/b&gt;" />
+				<field name="gridCategoriesColumn360" type="text" default="1" label="TPL_REDSHOP_CATEGORYCOLUMN_LABEL" description="TPL_REDSHOP_CATEGORYCOLUMN_DESC" filter="integer" />
+				<field name="gridCategoriesHeight360" type="text" default="200" label="TPL_REDSHOP_RELATEDPRODUCTCOLUMN_HEIGHT_LABEL" description="TPL_REDSHOP_RELATEDPRODUCTCOLUMN_HEIGHT_DESC" filter="integer" />
+				
+				<field type="spacer" />
+				<field type="spacer" label="&lt;b&gt;Product&lt;/b&gt;" />
+				<field name="gridProductsColumn360" type="text" default="1" label="TPL_REDSHOP_CATEGORYCOLUMN_LABEL" description="TPL_REDSHOP_CATEGORYCOLUMN_DESC" filter="integer" />
+				<field name="gridProductsHeight360" type="text" default="200" label="TPL_REDSHOP_PRODUCTCOLUMN_HEIGHT_LABEL" description="TPL_REDSHOP_PRODUCTCOLUMN_HEIGHT_DESC" filter="integer" />
+				
+				<field type="spacer" />
+				<field type="spacer" label="&lt;b&gt;Related Product&lt;/b&gt;" />
+				<field name="gridRelatedProductsColumn360" type="text" default="1" label="TPL_REDSHOP_CATEGORYCOLUMN_LABEL" description="TPL_REDSHOP_CATEGORYCOLUMN_DESC" filter="integer" />
+				<field name="gridRelatedProductsHeight360" type="text" default="200" label="TPL_REDSHOP_RELATEDPRODUCTCOLUMN_HEIGHT_LABEL" description="TPL_REDSHOP_RELATEDPRODUCTCOLUMN_HEIGHT_DESC" filter="integer" />
+			</fieldset>
+			
 		</fields>
 	</config>
+	
+
 </extension>

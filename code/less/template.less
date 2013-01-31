@@ -1,0 +1,66 @@
+/* author 		redWeb ApS
+ * copyright 	Copyright © 2013 redweb.dk All rights reserved.
+ * license  	http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
+ * website   	http://www.redweb.dk
+ */
+ 
+*
+{
+	position: relative;
+	box-sizing:border-box;
+	-moz-box-sizing:border-box; /* Firefox */
+	-webkit-box-sizing:border-box; /* Safari */
+	*zoom: 1;
+}
+ 
+// Font face
+@import "fontface.less";
+
+// CSS Reset
+@import "../wright/bootstrap/less/reset.less";
+
+// Core variables and mixins
+@import "variables.less"; // Modify this for custom colors, font-sizes, etc
+@import "../wright/bootstrap/less/mixins.less";
+
+// Grid system and page structure
+@import "../wright/bootstrap/less/scaffolding.less";
+@import "../wright/bootstrap/less/grid.less";
+@import "../wright/bootstrap/less/layouts.less";
+
+// Base CSS
+@import "../wright/bootstrap/less/type.less";
+@import "../wright/bootstrap/less/code.less";
+@import "../wright/bootstrap/less/forms.less";
+@import "../wright/bootstrap/less/tables.less";
+
+// Components: common
+@import "../wright/bootstrap/less/sprites.less";
+@import "../wright/bootstrap/less/dropdowns.less";
+@import "../wright/bootstrap/less/wells.less";
+@import "../wright/bootstrap/less/component-animations.less";
+@import "../wright/bootstrap/less/close.less";
+
+// Components: Buttons & Alerts
+@import "../wright/bootstrap/less/buttons.less";
+@import "../wright/bootstrap/less/button-groups.less";
+@import "../wright/bootstrap/less/alerts.less"; // Note: alerts share common CSS with buttons and thus have styles in buttons.less
+
+// Components: Nav
+@import "../wright/bootstrap/less/navs.less";
+@import "../wright/bootstrap/less/navbar.less";
+@import "../wright/bootstrap/less/breadcrumbs.less";
+@import "../wright/bootstrap/less/pagination.less";
+@import "../wright/bootstrap/less/pager.less";
+
+
+// Utility classes
+@import "../wright/bootstrap/less/utilities.less"; // Has to be last to override when necessary
+
+@import "redshop/mixins.less";
+@import "redshop/layout.less";
+
+//custom template
+@import "1_template.less";
+
+
